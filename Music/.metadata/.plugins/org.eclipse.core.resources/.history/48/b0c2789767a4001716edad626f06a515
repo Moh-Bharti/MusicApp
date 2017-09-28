@@ -63,30 +63,28 @@ public class playlist {
 		}
 		
 		while(Songs.iterator().next()!=null){
-			if(!Songs.iterator().next().name.equals(b)){
+			if(Songs.iterator().next().name.equals(b)==false){
 				throw new NoSuchSongException("Song is not there");
-			}else{
-				Song tree=Songs.iterator().next();
-				if(tree.name.equals(b)){
-					Songs.remove(tree);
-				}
 			}
 		}
-		
-		show();
+		while(Songs.iterator().next()!=null){
+			Song tree=Songs.iterator().next();
+			if(tree.name.equals(b)){
+				Songs.remove(tree);
+			}
+		}
 		while(Songs.iterator().next()!=null){
 			Song musix=Songs.iterator().next();
 			ObjectOutputStream out=null;
 			try{
-				out=new ObjectOutputStream(new FileOutputStream("Input.txt"));
+				out=new ObjectOutputStream(new FileOutputStream("Output.txt"));
 				out.writeObject(musix);
 			}finally{
 			out.close();}
 		}
 		
-		
 	}
-	public static void show()throws IOException,ClassNotFoundException{
+	public static void dispaly()throws IOException,ClassNotFoundException{
 		List<Song>Songs=new ArrayList<Song>();
 		ObjectInputStream in=new ObjectInputStream(new FileInputStream("Input.txt"));
 		try{
@@ -102,52 +100,15 @@ public class playlist {
 		}finally{
 			in.close();
 		}
-		Song p=Songs.iterator().next();
-			if(p==null){
-				System.out.println("No Song Exist");
-			}else{
-				while(Songs.iterator().next()!=null){
-					
-			System.out.println(p.name+p.Singer+p.duration);}
-		}
-		
-		
-	}
-	public static void search(String son)throws IOException,ClassNotFoundException,NoSuchSongException{
-		List<Song>Songs=new ArrayList<Song>();
-		ObjectInputStream in=new ObjectInputStream(new FileInputStream("Input.txt"));
-		
-		try{
-			while(true){
-				
-				Songs.add((Song)in.readObject());
-				}
-			
-		}catch(OptionalDataException e ){
-			if(!e.eof){
-				throw e;
-			}
-		}finally{
-			in.close();
-		}
 		while(Songs.iterator().next()!=null){
-			if(!Songs.iterator().next().name.equals(son)){
-				throw new NoSuchSongException("Song is not here");
-			}
-			if(Songs.iterator().next().name.equals(son)){
-				System.out.println(Songs.iterator().next().name+Songs.iterator().next().duration+Songs.iterator().next().Singer);
-			}
+			Song p=Songs.iterator().next();
+			System.out.println(p.name+p.Singer+p.duration);
 		}
 		
 		
-		
 	}
-	public static void BacktoMenu(){
-		String[] paths = (new File(“/tmp”)).list();
-		// List all the files and directory under “/tmp”
-		for(String path: paths) {
-		System.out.println(path);}
-	}
+	
+	
 	
 	
 }

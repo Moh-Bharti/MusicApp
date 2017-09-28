@@ -142,12 +142,7 @@ public class playlist {
 		
 		
 	}
-	public static void BacktoMenu(){
-		String[] paths = (new File(“/tmp”)).list();
-		// List all the files and directory under “/tmp”
-		for(String path: paths) {
-		System.out.println(path);}
-	}
+	
 	
 	
 }
