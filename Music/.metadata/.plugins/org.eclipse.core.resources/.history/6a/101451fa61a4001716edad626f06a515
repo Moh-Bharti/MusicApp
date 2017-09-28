@@ -3,18 +3,11 @@ import java.lang.*;
 import java.util.*;
 
 
-class NoSuchSongException extends Exception{
-	static final long serialVersionUID=4L;
-	String str;
-	NoSuchSongException(String st){
-		super(st);
-	}
-}
+
 class Song implements Serializable{
 	String name;
 	String Singer;
 	int duration;
-	static final long serialVersionUID=4L;
 	Song(String name,String Singer,int duration){
 		this.name=name;
 		this.Singer=Singer;
@@ -44,7 +37,7 @@ public class playlist {
 		
 		
 	}
-	public static void delete(String b)throws NoSuchSongException,IOException,ClassNotFoundException,OptionalDataException{
+	public static void delete(String b)throws IOException,ClassNotFoundException,OptionalDataException{
 		List<Song>Songs=new ArrayList<Song>();
 		ObjectInputStream in=new ObjectInputStream(new FileInputStream("Input.txt"));
 		
@@ -62,11 +55,7 @@ public class playlist {
 			in.close();
 		}
 		
-		while(Songs.iterator().next()!=null){
-			if(Songs.iterator().next().name.equals(b)==false){
-				throw new NoSuchSongException("Song is not there");
-			}
-		}
+		
 		while(Songs.iterator().next()!=null){
 			Song tree=Songs.iterator().next();
 			if(tree.name.equals(b)){
@@ -90,22 +79,13 @@ public class playlist {
 		try{
 			while(true){
 				Song h=(Song)in.readObject();
-				Songs.add(h);
-				
+				System.out.println(h.name+h.Singer+h.duration);
 			}
 		}catch(OptionalDataException e){
 			if(!e.eof){
 				throw e;
 			}
-		}finally{
-			in.close();
 		}
-		while(Songs.iterator().next()!=null){
-			Song p=Songs.iterator().next();
-			System.out.println(p.name+p.Singer+p.duration);
-		}
-		
-		
 	}
 	
 	

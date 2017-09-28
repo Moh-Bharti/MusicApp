@@ -4,7 +4,6 @@ import java.util.*;
 
 
 class NoSuchSongException extends Exception{
-	static final long serialVersionUID=4L;
 	String str;
 	NoSuchSongException(String st){
 		super(st);
@@ -90,22 +89,13 @@ public class playlist {
 		try{
 			while(true){
 				Song h=(Song)in.readObject();
-				Songs.add(h);
-				
+				System.out.println(h.name+h.Singer+h.duration);
 			}
 		}catch(OptionalDataException e){
 			if(!e.eof){
 				throw e;
 			}
-		}finally{
-			in.close();
 		}
-		while(Songs.iterator().next()!=null){
-			Song p=Songs.iterator().next();
-			System.out.println(p.name+p.Singer+p.duration);
-		}
-		
-		
 	}
 	
 	
