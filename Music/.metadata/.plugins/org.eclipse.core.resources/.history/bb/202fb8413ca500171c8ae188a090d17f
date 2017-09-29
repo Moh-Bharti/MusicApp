@@ -1,0 +1,22 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+import java.util.*;
+import java.io.*;
+public class MusicAppTestArena {
+	
+	
+	
+	
+	
+	@Test()
+	public void test() throws IOException,ClassNotFoundException{
+		playlist pop=new playlist();
+		pop.Songs.add(new Song("Dil se", "A.r.Rehman", 405));
+		int n=(pop.countnumber());
+		assertEquals("Wrong answer",3,n);
+		
+		fail("Not yet implemented");
+	}
+
+}

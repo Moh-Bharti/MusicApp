@@ -1,0 +1,55 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+import java.util.*;
+import java.io.*;
+public class MusicAppTestArena {
+	
+	static playlist pop=new playlist();
+	
+	public static void serialise()throws IOException{
+		ObjectOutputStream out=null;
+		try{
+			out=new ObjectOutputStream(new FileOutputStream("out.txt"));
+			out.writeObject(pop);
+		}finally{
+			out.close();
+		}
+		
+		
+	}
+	public static void deserialise()throws IOException ,ClassNotFoundException{
+		ObjectInputStream in=null;
+		try{
+			in=new ObjectInputStream(new FileInputStream("out.txt"));
+			playlist s1=(playlist)in.readObject();
+		}finally{
+			in.close();
+		}
+	}
+	
+	@Test()
+	public void test() throws IOException{
+		Song Arena=new Song("Arena","Daft-Punk",93);
+		Song  Suite=new Song(" Suite","Daft-Punk",1111);
+		Song Hello=new Song("Hello","Adele",295);	
+		pop.Songs.add(Arena);
+		pop.Songs.add(Suite);
+		pop.Songs.add(Hello);
+		
+		serialise();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		fail("Not yet implemented");
+	}
+
+}

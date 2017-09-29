@@ -1,0 +1,157 @@
+import java.io.*;
+import java.lang.*;
+import java.util.*;
+
+
+class NoSuchSongException extends Exception{
+	static final long serialVersionUID=4L;
+	String str;
+	NoSuchSongException(String st){
+		super(st);
+	}
+}
+class Song implements Serializable{
+	String name;
+	String Singer;
+	int duration;
+	static final long serialVersionUID=4L;
+	Song(String name,String Singer,int duration){
+		this.name=name;
+		this.Singer=Singer;
+		this.duration=duration;
+	}
+}
+ class playlist implements Serializable{
+	 List<Song>Songs=new ArrayList<Song>();
+	 static final long serialVersionUID=48L;
+	 playlist(List<Song> a){
+		 Songs=a;
+	 }
+	
+	
+	public static void add(Song a)throws IOException{
+		ObjectOutputStream out=null;
+		try{
+			out=new ObjectOutputStream(new FileOutputStream("Output.txt"));
+			out.writeObject(a);
+		}finally{
+		out.close();}
+		
+		
+	}
+	public static void delete(String b)throws NoSuchSongException,IOException,ClassNotFoundException,OptionalDataException{
+		List<Song>Songs=new ArrayList<Song>();
+		ObjectInputStream in=new ObjectInputStream(new FileInputStream("Input.txt"));
+		
+		try{
+			while(true){
+				
+				Songs.add((Song)in.readObject());
+				}
+			
+		}catch(OptionalDataException e ){
+			if(!e.eof){
+				throw e;
+			}
+		}finally{
+			in.close();
+		}
+		
+		while(Songs.iterator().next()!=null){
+			if(!Songs.iterator().next().name.equals(b)){
+				throw new NoSuchSongException("Song is not there");
+			}else{
+				Song tree=Songs.iterator().next();
+				if(tree.name.equals(b)){
+					Songs.remove(tree);
+				}
+			}
+		}
+		
+		show();
+		while(Songs.iterator().next()!=null){
+			Song musix=Songs.iterator().next();
+			ObjectOutputStream out=null;
+			try{
+				out=new ObjectOutputStream(new FileOutputStream("Input.txt"));
+				out.writeObject(musix);
+			}finally{
+			out.close();}
+		}
+		
+		
+	}
+	public static void show()throws IOException,ClassNotFoundException{
+		List<Song>Songs=new ArrayList<Song>();
+		ObjectInputStream in=new ObjectInputStream(new FileInputStream("Input.txt"));
+		try{
+			while(true){
+				Song h=(Song)in.readObject();
+				Songs.add(h);
+				
+			}
+		}catch(OptionalDataException e){
+			if(!e.eof){
+				throw e;
+			}
+		}finally{
+			in.close();
+		}
+		Song p=Songs.iterator().next();
+			if(p==null){
+				System.out.println("No Song Exist");
+			}else{
+				while(Songs.iterator().next()!=null){
+					
+			System.out.println(p.name+p.Singer+p.duration);}
+		}
+		
+		
+	}
+	public static void search(String son)throws IOException,ClassNotFoundException,NoSuchSongException{
+		List<Song>Songs=new ArrayList<Song>();
+		ObjectInputStream in=new ObjectInputStream(new FileInputStream("Input.txt"));
+		
+		try{
+			while(true){
+				
+				Songs.add((Song)in.readObject());
+				}
+			
+		}catch(OptionalDataException e ){
+			if(!e.eof){
+				throw e;
+			}
+		}finally{
+			in.close();
+		}
+		while(Songs.iterator().next()!=null){
+			if(!Songs.iterator().next().name.equals(son)){
+				throw new NoSuchSongException("Song is not here");
+			}
+			if(Songs.iterator().next().name.equals(son)){
+				System.out.println(Songs.iterator().next().name+Songs.iterator().next().duration+Songs.iterator().next().Singer);
+			}
+		}
+		
+		
+		
+	}
+	public static void BacktoMenu(){
+		String[] paths = (new File(“/tmp”)).list();
+		// List all the files and directory under “/tmp”
+		for(String path: paths) {
+		System.out.println(path);}
+	}
+	
+	
+}
+
+public class MusicApp {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
